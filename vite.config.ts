@@ -5,6 +5,9 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    // أضف هذا السطر لكي يتعرف التطبيق على مسار المستودع على جيت هب
+    base: '/first-project/',
+    
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
