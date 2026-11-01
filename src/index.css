@@ -1,0 +1,156 @@
+@import "tailwindcss";
+@import "@fontsource/ibm-plex-sans-arabic/400.css";
+@import "@fontsource/ibm-plex-sans-arabic/500.css";
+@import "@fontsource/ibm-plex-sans-arabic/600.css";
+@import "@fontsource/ibm-plex-sans-arabic/700.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ==== Modern design palette ====
+ * Remaps the Tailwind neutrals (slate/gray) to a soft, low-glare "ink" scale
+ * and the brand accent (indigo) to a calm teal. Dark mode surfaces are deep
+ * blue-grey instead of near-black to reduce eye strain. Logic is untouched. */
+@theme {
+  --color-slate-50:  oklch(0.985 0.004 240);
+  --color-slate-100: oklch(0.965 0.007 240);
+  --color-slate-200: oklch(0.925 0.011 240);
+  --color-slate-300: oklch(0.87 0.015 240);
+  --color-slate-400: oklch(0.71 0.02 245);
+  --color-slate-500: oklch(0.56 0.022 250);
+  --color-slate-600: oklch(0.45 0.024 252);
+  --color-slate-700: oklch(0.37 0.026 254);
+  --color-slate-800: oklch(0.29 0.025 256);
+  --color-slate-900: oklch(0.235 0.022 258);
+  --color-slate-950: oklch(0.195 0.02 260);
+
+  --color-gray-50:  var(--color-slate-50);
+  --color-gray-100: var(--color-slate-100);
+  --color-gray-200: var(--color-slate-200);
+  --color-gray-300: var(--color-slate-300);
+  --color-gray-400: var(--color-slate-400);
+  --color-gray-500: var(--color-slate-500);
+  --color-gray-600: var(--color-slate-600);
+  --color-gray-700: var(--color-slate-700);
+  --color-gray-800: var(--color-slate-800);
+  --color-gray-900: var(--color-slate-900);
+  --color-gray-950: var(--color-slate-950);
+
+  --color-indigo-50:  oklch(0.975 0.018 185);
+  --color-indigo-100: oklch(0.945 0.04 185);
+  --color-indigo-200: oklch(0.89 0.07 185);
+  --color-indigo-300: oklch(0.82 0.1 185);
+  --color-indigo-400: oklch(0.74 0.12 186);
+  --color-indigo-500: oklch(0.65 0.12 188);
+  --color-indigo-600: oklch(0.56 0.11 190);
+  --color-indigo-700: oklch(0.48 0.095 192);
+  --color-indigo-800: oklch(0.4 0.078 194);
+  --color-indigo-900: oklch(0.34 0.062 196);
+  --color-indigo-950: oklch(0.25 0.045 198);
+
+  --radius-xl: 0.85rem;
+  --radius-2xl: 1.15rem;
+}
+
+
+
+@layer base {
+  :root {
+    --font-sans: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    direction: rtl;
+    text-align: right;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--color-slate-100);
+    background-image: radial-gradient(1200px 500px at 100% -10%, oklch(0.94 0.04 185 / 0.55), transparent 60%);
+    background-attachment: fixed;
+    color: var(--color-slate-900);
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  /* ==== Bilingual layout direction ====
+   * The UI is authored RTL-first. When English is selected the document gets
+   * dir="ltr" and the physical utilities used across the app are mirrored so
+   * that spacing, borders and alignment follow the reading direction. */
+  html[dir="ltr"] body {
+    direction: ltr;
+    text-align: left;
+  }
+
+  html[dir="ltr"] .text-right { text-align: left; }
+  html[dir="ltr"] .text-left { text-align: right; }
+
+  html[dir="ltr"] .border-r {
+    border-right-width: 0;
+    border-left-width: 1px;
+  }
+  html[dir="ltr"] .border-l {
+    border-left-width: 0;
+    border-right-width: 1px;
+  }
+  html[dir="ltr"] .border-r-0 { border-left-width: 0; }
+  html[dir="ltr"] .border-l-0 { border-right-width: 0; }
+
+  /* Keep user content in its original direction regardless of the UI language */
+  [dir="auto"] {
+    unicode-bidi: plaintext;
+  }
+
+  html.dark body {
+    background-color: oklch(0.175 0.018 260);
+    background-image: radial-gradient(1200px 500px at 100% -10%, oklch(0.3 0.05 195 / 0.35), transparent 60%);
+    color: oklch(0.92 0.01 240);
+  }
+
+  ::selection { background: oklch(0.82 0.1 185 / 0.45); }
+  :focus-visible { outline: 2px solid var(--color-indigo-500); outline-offset: 2px; }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.4);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 116, 139, 0.6);
+  }
+  html.dark ::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.35);
+  }
+  html.dark ::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.55);
+  }
+}
+
+/* Print styles isolation */
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+}
